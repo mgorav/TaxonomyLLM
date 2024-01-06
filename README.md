@@ -79,24 +79,55 @@ The input schema undergoes vectorization into structural (Es) and positional (Ep
 
 ## Automated Taxonomy Generation
 
-**Input:** Logical schema tree S     
-**Output:**  Taxonomy graph T
+**Input**: Logical schema tree S (e.g. database schema specifying tables, columns, relationships)
 
-**Algorithm:**
+**Output**: Taxonomy graph T capturing equivalent classifications and semantics
+
+**Overall Algorithm**:
 
 ```
 Hs = TopoAttention(Es) // Structure Reasoning
-Hp = TopoAttention(Ep) // Position Reasoning 
-O = Generation(Hs, Hp)  // Graph Prediction
-T = Assemble(O) // RDF Materialization
-return T
+Hp = TopoAttention(Ep) // Position Reasoning  
+
+O = Generation(Hs, Hp)  // Taxonomy Decoding
+T = Assemble(O) // Taxonomy Materialization
+
+return T // Output Taxonomy Graph
 ```
 
-Where,
+**Where**:
 
-TopoAttention(E) = EWqKWkT // Disentangled Topology Alignment Matrix
+```
+TopoAttention(E) = EWqKWkT  
+```
 
-The topological attention mechanism exclusively assimilates the schema topology through masked projections, specializing the model. Structural and positional disentanglement further disambiguates element types enhancing bi-directional mappings.
+**Explanation**:
+
+1. Apply **TopoAttention** to input schema embedding E
+  - Generates separate structure (Hs) and position (Hp) representations
+
+2. Use Hs and Hp in decoder **Generation** step
+  - Structure and position aware taxonomy decoding
+
+3. **Assemble** RDF taxonomy graph T from output
+  - Enforce rigorous constraints
+  - Add metadata like labels, comments
+
+4. Returns materialized taxonomy graph
+
+The **key innovation** is the TopoAttention mechanism which specializes on understanding topological alignments between schema elements (tables, columns etc.) and equivalent taxonomy components (classes, properties etc).
+
+This allows translating schema structural patterns into valid taxonomy graphs automatically.
+
+>NOTE
+> Explanation of TopoAttention Components:
+> E: Input schema embedding
+> Wq: Learned projection matrix to query vectors
+> K: Learned projection matrix to key vectors
+> kT: Transpose keys to form attention matrix
+> EWq: Apply projections to map embeddings
+> KWkT: Apply projections and transpose
+> EWqKWkT: Dot product gives topology attention matrix 
 
 ## TopoAttention Mechanism
 
