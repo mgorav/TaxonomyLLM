@@ -167,70 +167,68 @@ Table 1 summarizes the results, showing averaged metrics across all test schemas
 
 TaxonomyLLM demonstrates high validity, confirming structural cohesiveness, consistent vocabulary, precise schema element mappings, and topological similarity. Minimal retraining adapts the model to enterprise-specific constraints, showcasing efficient transfer learning capabilities.
 
-## Example: Mathematical Formulation Using C360
+## Example
 
-We can mathematically formulate the core concepts in TaxonomyLLM using a simple customer 360 schema comprising:
+## Taxonomy Tagging Process
 
-```
-Customer(id, name, email, phone) 
-Order(order_id, product, amount)
-```
-
-And target taxonomy structure:
+We can represent the taxonomy tagging process mathematically. Consider a sample schema:
 
 ```
-ex:Customer ex:places ex:Order
+Member(id, name, email, address)  
+Activity(id, type, timestamp)
 ```
 
 **Input Embedding**
 
-First, we embed discrete input tokens into a continuous vector space:
+First, we embed the input tokens into continuous vectors:
 
 ```
-v_Customer = Embed(Customer)
-v_Order = Embed(Order) 
+v_Member = Embed(Member)
+v_Activity = Embed(Activity)
 ```
 
-**Query Key Projection**
+**Taxonomy Targets**
 
-We then generate query and key vectors via separate learned projections:
+We define target taxonomy tags:
 
 ```
-q_vCustomer = v_Customer * Wq
-k_vOrder = v_Order * Wk
+t_Personal = PersonalInformation
+t_Event = ActivityEvent
 ```
 
 **Topology Attention**
 
-Taking dot product between query and key vectors gives topology alignment score:
+We then compute topology alignment scores between inputs and targets:
 
 ```
-A_topology = q_vCustomer * k_vOrderT 
+A_Member,Personal = v_Member * t_PersonalT 
+A_Activity,Event = v_Activity * t_EventT
 ```
 
-Higher score indicates Customer-Order schema relationship.
+**Tag Decoding**
 
-**Graph Decoding**
-
-The attention distribution is used to decode output graph:
+Using the attention scores, we decode most compatible taxonomy tags:
 
 ```
-p(ex:Customer ex:places ex:Order) =  Softmax(A_topology)
+p(PersonalInformation | Member) = Softmax(A_Member,Personal) 
+p(ActivityEvent | Activity) = Softmax(A_Activity,Event)
 ```
-
-Higher attention increases probability of predicting correct output triplet.
 
 **Optimization**
 
-Model is trained to minimize negative log likelihood loss:
+The model minimizes negative log likelihood loss:
 
-``` 
-L = -log p(ex:Customer ex:places ex:Order)
+```
+L = -log p(PersonalInformation | Member) - log p(ActivityEvent | Activity)
 ```
 
-By iteratively improving loss, TaxonomyLLM learns structural alignments between input schema and output taxonomy.
+By improving the loss, the model learns to map input schema elements to accurate taxonomy tags.
 
-In short, specialized attention mechanisms allow translating elements from input to output topology by capturing their compatibility patterns.
+**Benefits**
+
+- Mathematically formalizes the taxonomy tagging process
+- Attention scores model schema-tag compatibilities
+- Enables automating accurate tagging
 
 ## Conclusion
 
