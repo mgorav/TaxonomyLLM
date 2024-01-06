@@ -279,66 +279,58 @@ As next steps, we are investing effort into annotating 500 genuine schemas for a
 
 ## Example
 
-### Taxonomy Tagging Process
+### Mapping Database Schemas to Taxonomies
 
-We can represent the taxonomy tagging process mathematically. Consider a sample schema:
-
-```
-Member(id, name, email, address)  
-Activity(id, type, timestamp)
-```
-
-**Input Embedding**
-
-First, we embed the input tokens into continuous vectors:
+**Problem**: Need for automated annotation of database schemas like:
 
 ```
-v_Member = Embed(Member)
-v_Activity = Embed(Activity)
+Member(id, name, email)
+Activity(id, type, time)
 ```
 
-**Taxonomy Targets**
+with relevant taxonomy tags like `PersonalInformation`, `ActivityEvent` based on table semantics.
 
-We define target taxonomy tags:
+**Approach**: Use topological attention to model schema-taxonomy compatibility and translate elements.
 
-```
-t_Personal = PersonalInformation
-t_Event = ActivityEvent
-```
+**Step 1: Schema Encoding**
 
-**Topology Attention**
-
-We then compute topology alignment scores between inputs and targets:
+Encode input schema tokens like `Member` into vector representations capturing semantics:
 
 ```
-A_Member,Personal = v_Member * t_PersonalT 
-A_Activity,Event = v_Activity * t_EventT
+x_member = [0.2, 1.3, 0.8, ...] 
 ```
 
-**Tag Decoding**
+**Step 2: Taxonomy Encoding**
 
-Using the attention scores, we decode most compatible taxonomy tags:
-
-```
-p(PersonalInformation | Member) = Softmax(A_Member,Personal) 
-p(ActivityEvent | Activity) = Softmax(A_Activity,Event)
-```
-
-**Optimization**
-
-The model minimizes negative log likelihood loss:
+Similarly, encode target taxonomy tags into semantic vectors:
 
 ```
-L = -log p(PersonalInformation | Member) - log p(ActivityEvent | Activity)
+t_personal = [0.5, 0.1, 1.1, ...]  
 ```
 
-By improving the loss, the model learns to map input schema elements to accurate taxonomy tags.
+**Step 3: Topology Attention**
 
-**Benefits**
+Compute compatibility scores between schema and tag vectors. For example:
 
-- Mathematically formalizes the taxonomy tagging process
-- Attention scores model schema-tag compatibilities
-- Enables automating accurate tagging
+```
+A_personal = x_member * t_personalT  
+```
+
+High score indicates semantic similarity.
+
+**Step 4: Tag Decoding**
+
+Convert scores into tagging probabilities via softmax:
+
+```
+p(t_personal | x_member) = Softmax(A_personal)
+```
+
+**Step 5: Optimization**
+
+Improve probabilities by gradient descent.
+
+**Outcome**: Learn mappings between schema elements like Member and appropriate taxonomy tags like PersonalInformation.
 
 ## TaxonomyLLM Implementation
 
