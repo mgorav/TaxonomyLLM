@@ -6,7 +6,7 @@ Organizations grapple with disjoint data classifications that require reconcilia
 
 ## Introduction
 
-As organizations accelerate adoption of ML, consistent data understanding through unified semantics becomes critical to extract meaningful value from information [1]. However, disparate terminologies and fragmented schemas frequently introduce complexity requiring harmonization. Manually crafting taxonomy tags is non-trivial, expensive and slow.
+As organizations accelerate adoption of ML, consistent data understanding through unified semantics becomes critical to extract meaningful value from information [1]. However, disparate terminologies and fragmented schemas frequently introduce complexity requiring harmonization. Manually crafting taxonomy tags is non-trivial, expensive, and slow.
 
 We introduce TaxonomyLLM, an extension to large language models, tailored for systematic translation of logical schemas into standardized taxonomy structures encoded in RDF. It combines the scalability of LLMs with the rigor of mathematical formalizations defining correct schema element mappings. A topological attention mechanism exclusively focuses on correlating syntactic schema patterns to semantic taxonomy representations, a vital pairing that allows element-level changes to be accurately reflected in taxonomies.
 
@@ -124,14 +124,14 @@ Attention(Qi, Kj) = QiKjT
 The Disentangled Topology Alignment Matrix involves two separate attention matrices:
 
 - **HsAttention (Schema Structure):**
-    - **Qs:** Query vectors projected from schema embeddings Es
-    - **Ws:** Learned projection matrix mapping schema embeddings to key vectors
-    - **QsWsT:** Dot product captures schema structure-to-structure attention
+  - **Qs:** Query vectors projected from schema embeddings Es
+  - **Ws:** Learned projection matrix mapping schema embeddings to key vectors
+  - **QsWsT:** Dot product captures schema structure-to-structure attention
 
 - **HpAttention (Taxonomy Position):**
-    - **Qp:** Query vectors projected from taxonomy embeddings Ep
-    - **Wp:** Learned projection matrix mapping taxonomy embeddings to key vectors
-    - **QpWpT:** Dot product captures taxonomy position-to-position attention
+  - **Qp:** Query vectors projected from taxonomy embeddings Ep
+  - **Wp:** Learned projection matrix mapping taxonomy embeddings to key vectors
+  - **QpWpT:** Dot product captures taxonomy position-to-position attention
 
 These matrices enable selective attention to structural and positional elements, facilitating precise schema-to-taxonomy translation.
 
@@ -150,11 +150,11 @@ We benchmark TaxonomyLLM on 500 previously unseen enterprise schemas, evaluating
 - **Validity:** Conforms to RDF standards
 - **Precision:** Accurate element mappings
 - **Consistency:** Uniform vocabulary usage
--
+- **Structure:** Preserves schema topology
 
-**Structure:** Preserves schema topology
+Table 1 summarizes the results, showing averaged metrics
 
-Table 1 summarizes the results, showing averaged metrics across all test schemas:
+across all test schemas:
 
 | Metric                 | Score |
 | ---------------------- | ----- |
@@ -169,7 +169,7 @@ TaxonomyLLM demonstrates high validity, confirming structural cohesiveness, cons
 
 ## Example
 
-## Taxonomy Tagging Process
+### Taxonomy Tagging Process
 
 We can represent the taxonomy tagging process mathematically. Consider a sample schema:
 
@@ -233,7 +233,6 @@ By improving the loss, the model learns to map input schema elements to accurate
 ## Conclusion
 
 In conclusion, TaxonomyLLM presents an LLM extension capable of auto-generating standard taxonomy tags from input logical schemas. It excels by assimilating the schema topology and accurately encoding its translation to a valid RDF graph. Comprehensive evaluations quantify topological soundness and elevated quality across key taxonomy dimensions. Future work aims to enhance TaxonomyLLM to parse more complex schemas and constraints, optimizing accuracy and validity further through continued pre-training.
-
 
 ## References
 
