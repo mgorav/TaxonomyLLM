@@ -436,7 +436,7 @@ The TaxonomyLLM model builds on T5 by adding customizations:
 
 - **SchemaEncoder**: This encoder ingests and vectorizes input SQL schema text to specialized hidden representations attuned to schema structure
 - Key responsibilities:
-  - Parse SQL CREATE statements
+  - Parse SQL CREATE statements or JSON payload to simplify using data contracts
   - Distill tables, columns, data types
   - Output schema encoding vectors
 
