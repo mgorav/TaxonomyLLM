@@ -1,0 +1,28 @@
+# Ignore IDE config folders
+.idea/
+
+# Ignore Mac DS_Store files
+.DS_Store
+
+# Ignore node_modules folder
+node_modules/
+
+# Ignore build output
+dist/
+build/
+
+# Ignore npm debug log
+npm-debug.log*
+
+# Ignore yarn debug log
+yarn-debug.log*
+yarn-error.log*
+
+# Ignore pyc files
+*.pyc
+
+# Ignore sqlite db files
+*.db
+
+# Ignore env files
+.env

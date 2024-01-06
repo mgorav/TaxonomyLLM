@@ -1,0 +1,26 @@
+graph TB
+
+    subgraph Encoder
+        Schema[Logical<br/>Schema]-->|Vectorize|Es[(E_s,E_p)]
+    end
+
+    subgraph LLM[TaxonomyLLM]
+        Es-->H[(H_s,H_p)]
+        H-->O[RDF<br/>Graph]
+    end
+
+    O-->|Materialize|T[Taxonomy<br/>Graph]
+
+    classDef default fill:#99ddff,stroke:#3d64ff
+    classDef arch fill:#cce5ff,stroke:#3d64ff
+
+    linkStyle 0 stroke:#3d64ff,stroke-width:2px,fill:none
+
+%% Styling
+    class Schema,T rect
+    class Es,H,O round
+
+    T{
+        font-size: 18px;
+font-weight: bold;
+}
