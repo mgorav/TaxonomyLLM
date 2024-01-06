@@ -1,0 +1,29 @@
+graph TB
+
+    subgraph "Pre-Training"
+
+        SchemaStore([Schema<br>Corpus])-->Assimilate((Assimilate<br>Patterns))
+        SchemaStore-.->Encode([Encode<br>RDF Actions])
+        SchemaStore-.->Align([Learn<br>Alignments])
+
+        classDef blue fill:#cfe2f3,stroke:#3d91ce
+        class SchemaStore,Assimilate,Encode,Align blue
+
+        SchemaStore-->Assimilate
+        SchemaStore-->Encode
+        SchemaStore-->Align
+    end
+
+    subgraph "Tuning"
+
+        subgraph "Feedback"
+            Valid([Valid<br>T Graph])-.->Invalid((Invalid<br>T Graph))
+        end
+
+        Valid-.->Bindings([Learn Bindings])
+        Valid-.->ScopeRules([Property Scopes])
+        Valid-.->Constraints([Ontology<br>Constraints])
+
+        classDef red fill:#f8c4d4,stroke:#df4c74
+        class Valid,Invalid,Bindings,ScopeRules,Constraints red
+    end

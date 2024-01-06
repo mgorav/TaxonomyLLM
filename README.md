@@ -12,13 +12,29 @@ I will introduce TaxonomyLLM, an extension to large language models, tailored fo
 
 I will first mathematically formulate the model architecture, objectives and training methodology. I will then present results from comprehensive evaluations on real-world use cases demonstrating consistent precision and validity in mapping large schemas to corresponding taxonomy graphs.
 
+## Methodology
+
+The methodology for automatically generating taxonomy tags from input schemas employs a two-phase approach using specialized pre-training and instruction-based tuning, as depicted in Figure 1.
+
+![Methodology.png](Methodology.png)
+
+*Figure 1: Two-phase taxonomy generation methodology*
+
+In the pre-training phase, we leverage large schema corpus like SchemaStore to train the model to learn topological alignments between schema elements and equivalent taxonomy representations.
+
+The instruction-based tuning further provides supervised feedback using valid and invalid taxonomy graph samples to teach the model formal RDF constraints.
+
+By combining generalized schema assimilation with specialized topological reasoning, our methodology balances wide coverage through pre-training with precision tuning on taxonomy specifications to produce high-quality schema translations.
+
+We next delve into the details of each phase in the subsequent sections.
+
 ## Model Architecture
 
-As depicted in Fig. 1, TaxonomyLLM specializes a transformer-based masked auto-encoding structure to ingest logical schemas and generate equivalent RDF taxonomy graphs.
+As depicted in Fig. 2, TaxonomyLLM specializes a transformer-based masked auto-encoding structure to ingest logical schemas and generate equivalent RDF taxonomy graphs.
 
-![img.png](ModelArchitecture.png)
+![ModelArchitecture.png](ModelArchitecture.png)
 
-*Fig. 1: TaxonomyLLM Architecture*
+*Fig. 2: TaxonomyLLM Architecture*
 
 The input schema undergoes vectorization into structural (Es) and positional (Ep) embeddings. Disentangled hidden representations (Hs, Hp) subsequently focus exclusively on taxonomic topo-relational reasoning. The output taxonomy graph then gets materialized into a standard format. Next we formulate the mathematical translation procedure.
 
