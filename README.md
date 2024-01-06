@@ -16,8 +16,34 @@ I will first mathematically formulate the model architecture, objectives and tra
 
 The methodology for automatically generating taxonomy tags from input schemas employs a two-phase approach using specialized pre-training and instruction-based tuning, as depicted in Figure 1.
 
-![Methodology.png](Methodology.png)
+```mermaid 
+graph TB
 
+    subgraph "Pre-Training"
+
+        SchemaStore([Schema<br>Corpus])-->Assimilate((Assimilate<br>Patterns))
+        SchemaStore-.->Encode([Encode<br>RDF Actions])
+        SchemaStore-.->Align([Learn<br>Alignments])
+
+        class SchemaStore,Assimilate,Encode,Align blue
+
+        SchemaStore-->Assimilate
+        SchemaStore-->Encode
+        SchemaStore-->Align
+    end
+
+    subgraph "Tuning"
+
+        subgraph "Feedback"
+            Valid([Valid<br>T Graph])-.->Invalid((Invalid<br>T Graph))
+        end
+
+        Valid-.->Bindings([Learn Bindings])
+        Valid-.->ScopeRules([Property Scopes])
+        Valid-.->Constraints([Ontology<br>Constraints])
+
+    end
+```   
 *Figure 1: Two-phase taxonomy generation methodology*
 
 In the pre-training phase, we leverage large schema corpus like SchemaStore to train the model to learn topological alignments between schema elements and equivalent taxonomy representations.
@@ -28,11 +54,26 @@ By combining generalized schema assimilation with specialized topological reason
 
 We next delve into the details of each phase in the subsequent sections.
 
+
+
 ## Model Architecture
 
 As depicted in Fig. 2, TaxonomyLLM specializes a transformer-based masked auto-encoding structure to ingest logical schemas and generate equivalent RDF taxonomy graphs.
 
-![ModelArchitecture.png](ModelArchitecture.png)
+```mermaid 
+graph TB
+
+    subgraph Encoder
+        Schema[Logical<br/>Schema]-->|Vectorize|Es[(E_s,E_p)]
+    end
+
+    subgraph LLM[TaxonomyLLM]
+        Es-->H[(H_s,H_p)]
+        H-->O[RDF<br/>Graph]
+    end
+
+    O-->|Materialize|T[Taxonomy<br/>Graph]
+```
 
 *Fig. 2: TaxonomyLLM Architecture*
 
