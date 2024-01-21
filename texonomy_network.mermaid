@@ -1,0 +1,18 @@
+graph TB
+
+    subgraph Input Layer
+        A(Input Data)
+    end
+
+    subgraph SchemaEncoder
+        B(Embedding Layer)
+        C(Flatten Layer)
+    end
+
+    subgraph TaxonomyDecoder
+        D(RDF Generation)
+    end
+
+    A --> B
+    B --> C
+    C --> D

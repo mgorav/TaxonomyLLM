@@ -1,0 +1,6 @@
+graph LR
+subgraph TaxonomyLLM
+S[SQL Schema] --> Enc[SchemaEncoder]
+Enc --> Dec[TaxonomyDecoder]
+Dec --> T(RDF Taxonomy)
+end
