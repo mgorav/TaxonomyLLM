@@ -1,5 +1,5 @@
 # TaxonomyLLM: An LLM Extension for Automated Taxonomy Generation
-
+![taxonomy_llm.png](taxonomy_llm.png)
 ## Abstract
 
 Organizations grapple with disjoint data classifications that require reconciliation. Manually defining taxonomy tags does not scale. We present TaxonomyLLM, an extension to foundation LLMs, to auto-generate tags from logical schemas. Mathematical abstractions encode rigor while a novel disentangled topological attention mechanism captures underlying knowledge structures. Pre-training on large schema corpora imparts key inductive biases. Instruction tuning on a taxonomy dataset further specializes the model. Comprehensive evaluations on real-world use cases demonstrate consistent high precision and structural accuracy in propagating schema transformations to valid taxonomies.
